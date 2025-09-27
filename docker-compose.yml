@@ -2,10 +2,31 @@ services:
   searxng:
     image: searxng/searxng:latest
     container_name: searxng
-    ports:
-      - "8080:8080"
+    expose:
+      - "8080"
     volumes:
       - ./config:/etc/searxng:rw
     environment:
-      - BASE_URL=http://localhost:8080/
+      - BASE_URL=http://localhost/
     restart: unless-stopped
+    networks:
+      - searxnet
+  caddy:
+    image: caddy:latest
+    container_name: caddy
+    restart: unless-stopped
+    ports:
+      - "443:443"   # HTTPS
+    networks:
+      - searxnet
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+
+networks:
+  searxnet:
+
+volumes:
+  caddy_data:
+  caddy_config:
