@@ -112,8 +112,8 @@ server:
     X-Robots-Tag: noindex, nofollow
     Referrer-Policy: no-referrer
     Access-Control-Allow-Origin: "*"
-    Access-Control-Allow-Methods: "POST, OPTIONS"
-    Access-Control-Allow-Headers: "Content-Type"
+    Access-Control-Allow-Methods: "GET, POST, OPTIONS"
+    Access-Control-Allow-Headers: "Content-Type, X-Requested-With, User-Agent"
 
 valkey:
   # URL to connect valkey database. Is overwritten by ${SEARXNG_VALKEY_URL}.
