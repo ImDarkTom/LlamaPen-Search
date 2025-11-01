@@ -7,11 +7,11 @@ import asyncio
 import logging
 import requests
 
-SEARX_URL = "http://searxng:8080"
+SEARXNG_URL = "http://searxng:8080"
 
 app = FastAPI(
-    title="URL to Markdown API",
-    description="API service to convert urls to markdown using MarkItDown",
+    title="LlamaPen-Search",
+    description="LlamaPen Search (SearXNG) & URL to Markdown (MarkItDown) API.",
     version="1.0.0",
 )
 
@@ -55,7 +55,7 @@ async def search(q: str, limit: int = 5):
     
     limit = max([limit, 1])
 
-    response = requests.get(f"{SEARX_URL}/search?q={q}&format=json", verify=False)
+    response = requests.get(f"{SEARXNG_URL}/search?q={q}&format=json", verify=False)
 
     data = response.json()
 
