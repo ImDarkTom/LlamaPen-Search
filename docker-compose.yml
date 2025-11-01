@@ -7,7 +7,7 @@ services:
     volumes:
       - ./config:/etc/searxng:rw
     environment:
-      - BASE_URL=http://localhost/
+      - BASE_URL=https://localhost/
     restart: unless-stopped
     networks:
       - searxnet

@@ -2,10 +2,6 @@
 
 Add self-hosted search integration to [LlamaPen](https://github.com/ImDarkTom/LlamaPen) using SearXNG and Caddy.
 
-## Credits
-- **Search results**: [SearXNG](https://github.com/searxng/searxng/)
-- **Site as markdown**: [url-to-markdown](https://github.com/iw4p/url-to-markdown) by iw4p
-
 ## Setup
 
 ### Prerequisites
@@ -43,3 +39,7 @@ By default, the `config/settings.yml` file is setup to allow requests from all o
 
 ## Why port 443?
 Setting up on port 443 allows us to connect to our local SearXNG instance via HTTPS. This is important because modern web browsers enforce security rules that cause HTTPS websites like the [official LlamaPen instance](https://llamapen.app/) to not able to send requests to non-HTTPS websites. This configuration addresses that and lets you use web search on both the official and any self-hosted LlamaPen instances, while not requiring any 3rd party dns/domain.
+
+## Credits
+- **Search results**: [SearXNG](https://github.com/searxng/searxng/)
+- **Original site as markdown code**: [url-to-markdown](https://github.com/iw4p/url-to-markdown) by iw4p

@@ -1,3 +1,3 @@
 localhost
 
-reverse_proxy searxng:8080
+reverse_proxy url2md:8000

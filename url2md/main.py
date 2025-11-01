@@ -6,7 +6,7 @@ import asyncio
 import logging
 import requests
 
-SERVICE_A_URL = "https://localhost"
+SEARX_URL = "http://searxng:8080"
 
 app = FastAPI(
     title="URL to Markdown API",
@@ -23,11 +23,10 @@ async def healthz():
     return Response(content="ok", media_type="text/plain")
 
 @app.get("/search")
-async def search(request: Request, q: str, limit: int = 5):
+async def search(q: str, limit: int = 5):
     def format_result(result):
         return {
             "url": result.get("url", ""),
-            "view_url": f"{request.base_url}open?url={result.get("url", "")}",
             "title": result.get("title", ""),
             "content": result.get("content", ""),
             "published": result.get("publishedDate", "")
@@ -35,7 +34,7 @@ async def search(request: Request, q: str, limit: int = 5):
     
     limit = max([limit, 1])
 
-    response = requests.get(f"{SERVICE_A_URL}/search?q={q}&format=json", verify=False)
+    response = requests.get(f"{SEARX_URL}/search?q={q}&format=json", verify=False)
 
     data = response.json()
 
