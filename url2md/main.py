@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import Response
+from fastapi.middleware.cors import CORSMiddleware
 from markitdown import MarkItDown, UnsupportedFormatException, FileConversionException
 from urllib.parse import unquote
 import asyncio
@@ -12,6 +13,20 @@ app = FastAPI(
     title="URL to Markdown API",
     description="API service to convert urls to markdown using MarkItDown",
     version="1.0.0",
+)
+
+origins = [
+    "https://localhost",
+    "https://llamapen.app",
+    "http://localhost:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 logging.basicConfig(level=logging.INFO)
