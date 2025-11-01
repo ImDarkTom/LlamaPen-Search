@@ -7,33 +7,18 @@ services:
     volumes:
       - ./config:/etc/searxng:rw
     environment:
-      - BASE_URL=https://localhost/
+      - BASE_URL=http://localhost:8080/
     restart: unless-stopped
     networks:
       - searxnet
-  caddy:
-    image: caddy:latest
-    container_name: caddy
-    restart: unless-stopped
-    ports:
-      - "443:443"   # HTTPS
-    networks:
-      - searxnet
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
-      - caddy_data:/data
-      - caddy_config:/config
   url2md:
     build: ./url2md
     container_name: url2md
     ports:
-      - 8000:8000
+      - "8000:8000"
+    restart: unless-stopped
     networks:
       - searxnet
 
 networks:
   searxnet:
-
-volumes:
-  caddy_data:
-  caddy_config:

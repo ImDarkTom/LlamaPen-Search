@@ -16,9 +16,8 @@ app = FastAPI(
 )
 
 origins = [
-    "https://localhost",
-    "https://llamapen.app",
     "http://localhost:5173",
+    "https://llamapen.app",
 ]
 
 app.add_middleware(
@@ -31,6 +30,13 @@ app.add_middleware(
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+@app.get("/")
+async def root():
+    return Response(
+        content="Usage: \n\nGet JSON search results.\n- /search?q=<query>&limit=<optional-num>\n\nReturn page contents at URL as MarkDown.\n- /open?url=<url>\n", 
+        media_type="text/plain"
+    )
 
 
 @app.get("/healthz")
@@ -62,6 +68,7 @@ async def search(q: str, limit: int = 5):
     }
 
 
+# Original: https://github.com/iw4p/url-to-markdown
 @app.get("/open")
 async def convert_url(url: str, request: Request):
     if not url:
