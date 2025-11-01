@@ -28,6 +28,8 @@ services:
     container_name: url2md
     ports:
       - 8000:8000
+    networks:
+      - searxnet
 
 networks:
   searxnet:

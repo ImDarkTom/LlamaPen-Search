@@ -4,6 +4,9 @@ from markitdown import MarkItDown, UnsupportedFormatException, FileConversionExc
 from urllib.parse import unquote
 import asyncio
 import logging
+import requests
+
+SERVICE_A_URL = "https://localhost"
 
 app = FastAPI(
     title="URL to Markdown API",
@@ -19,18 +22,37 @@ logger = logging.getLogger(__name__)
 async def healthz():
     return Response(content="ok", media_type="text/plain")
 
+@app.get("/search")
+async def search(request: Request, q: str, limit: int = 5):
+    def format_result(result):
+        return {
+            "url": result.get("url", ""),
+            "view_url": f"{request.base_url}open?url={result.get("url", "")}",
+            "title": result.get("title", ""),
+            "content": result.get("content", ""),
+            "published": result.get("publishedDate", "")
+        }
+    
+    limit = max([limit, 1])
 
-@app.get("/{url:path}")
+    response = requests.get(f"{SERVICE_A_URL}/search?q={q}&format=json", verify=False)
+
+    data = response.json()
+
+    results = data.get("results", [])[:limit]
+    results = list(map(format_result, results))
+
+    return {
+        "query": q,
+        "results": results
+    }
+
+
+@app.get("/open")
 async def convert_url(url: str, request: Request):
-    url = (
-        request.url.path[1:]
-        if not request.url.query
-        else request.url.path[1:] + "?" + request.url.query
-    )
-    logger.info("Received URL path: %s", url)
-    if url is None or url == "":
+    if not url:
         return Response(
-            content=f"Usage: {request.base_url}<url>",
+            content=f"Usage: {request.base_url}open?url=<url>",
             media_type="text/plain",
         )
 
