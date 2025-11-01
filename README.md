@@ -2,6 +2,10 @@
 
 Add self-hosted search integration to [LlamaPen](https://github.com/ImDarkTom/LlamaPen) using SearXNG and Caddy.
 
+## Credits
+- **Search results**: [SearXNG](https://github.com/searxng/searxng/)
+- **Site as markdown**: [url-to-markdown](https://github.com/iw4p/url-to-markdown) by iw4p
+
 ## Setup
 
 ### Prerequisites
